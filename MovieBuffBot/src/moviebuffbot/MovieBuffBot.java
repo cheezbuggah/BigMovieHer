@@ -30,9 +30,10 @@ public class MovieBuffBot extends TelegramLongPollingBot {
     @Override
     @SuppressWarnings("CallToPrintStackTrace")
     public void onUpdateReceived(Update update) {
-
         // We check if the update has a message and the message has text
         if (update.hasMessage() && update.getMessage().hasText()) {
+
+
             // Set variables
             String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
@@ -54,13 +55,13 @@ public class MovieBuffBot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         // Return bot username
-        return "<ENTER_BOT_USERNAME_HERE>";
+        return "botSnow";
     }
 
     @Override
     public String getBotToken() {
         // Return bot token from BotFather
-        return "<ENTER_BOT_TOKEN_HERE>";
+        return "565323008:AAGFW1veHex8K7S6q9_pqwIx7YFVh6oalaY";
     }
 
 }
