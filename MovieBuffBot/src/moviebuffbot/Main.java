@@ -31,7 +31,7 @@ public class Main {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-        System.out.println("MovieBuffBot successfully started.");
+        System.out.println("botSnow successfully started. It knows nothing.");
     }
     
 }
