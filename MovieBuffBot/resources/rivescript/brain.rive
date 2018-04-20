@@ -8,32 +8,78 @@
 - Splendid!
 - Couldn't be better!
 
++what's the meaning of life
+-42
+
 + [*] start [*]
 - I'm Movie Buff bot! Ask me questions about your favorite movies. Type /help for some example questions.
 
 + [*] help [*]
 - You can ask me questions like:\n
-^ Which movies did Liv Tyler act in?\n
-^ What is the date?\n
-^ show files\n
-^ What are common video formats?
+^ how many movies were only made for tv\n
+^ in which country are the most movies made\n
+^ which movies are (partially) played in New York\n
+^ do you think that strange women lyin in ponds distributin swords is a basis for a system of gouvernment?\n
+^ which movies were filmed in more than one country\n
+^ in which movies did joop braakhekke play\n
+^ what is the shortest movie with a rating of 8 or higher\n
+^ which movie has the highest rating with the least amount of votes\n
+^ in which year were the most movies shot in the netherlands\n
+^ how many movies contain the word * \n
+^ how many times does a number appear in the title\n
+^ show me the amount of movies made in the netherlands by time\n
 
 + *
 - Not sure I got that. Type /help for some example questions.
 
-+ show files
-- <call>system ls -l</call>
 
-+ what is the date?
-- The date is: <call>system date</call>
 
-+ which movies did _ _ *
-- <call>jdbc localhost 3306 imdb imdb imdb select title from cast_info, name, title, kind_type where person_id = name.id and title.id = movie_id and kind_id = kind_type.id and name like '<star2>, <star>' and kind = 'movie'</call>
 
-+ [*] video formats [*]
-- There it is! 
-^ <call>system resources/R/video-format.R 2&> /dev/null</call>
-^ <call>send photo /tmp/video-format.jpg The graph produced by R</call>
+
+
++ test
+-<call>jdbc localhost 3306 bigmovieher root admin select primaryTitle from bigmovieher.title LIMIT 10</call>
+
++how many movies were only made for tv
+-<call>jdbc localhost 3306 bigmovieher root admin SELECT count(id) FROM film WHERE id LIKE '%(TV)'</call>
+
++in which country are the most movies made
+-<call>jdbc localhost 3306 bigmovieher root admin SELECT name FROM country GROUP BY name ORDER BY COUNT(name) DESC LIMIT 1 </call>
+
++which movies are (partially) played in new york
+-The amount of movies that are played in New York : <call>jdbc localhost 3306 bigmovieher root admin SELECT COUNT(film.name) FROM state INNER JOIN film ON state.filmid = film.id AND state.name LIKE '%New York%' </call>
+^Here are 5 examples of those movies:\n
+^<call>jdbc localhost 3306 bigmovieher root admin SELECT film.name FROM state INNER JOIN film ON state.filmid = film.id AND state.name LIKE '%New York%' LIMIT 5  </call>\n
+
++which movies were filmed in more than one country
+-<call>jdbc localhost 3306 bigmovieher root admin SELECT COUNT(*) FROM( SELECT filmid FROM country GROUP BY filmid HAVING COUNT(*) > 1) COUNT</call>
+^Here are 5 examples of those movies:\n
+^<call>jdbc localhost 3306 bigmovieher root admin SELECT film.name FROM( SELECT filmid FROM country GROUP BY filmid HAVING COUNT(*) > 1) COUNT LIMIT 5</call>
+
++in which movies did joop braakhekke play
+-Joop played in these movies:
+^<call>jdbc localhost 3306 bigmovieher root admin select film.name from film inner join actor on film.id = actor.filmid and actor.name = 'Joop' and surname = 'Braakhekke'</call>
+
++what is the shortest movie with a rating of 8 or higher
+-<call>jdbc localhost 3306 bigmovieher root admin SELECT name FROM film,runtime,rating WHERE film.id = runtime.filmid AND film.id = rating.filmid ORDER BY runtime.amount ASC, rating.average DESC LIMIT 1</call>
+
++which movie has the highest rating with the least amount of votes
+-<call>jdbc localhost 3306 bigmovieher root admin SELECT rating.filmid, rating.average FROM public.rating WHERE average IN (SELECT average FROM public.rating ORDER BY average DESC LIMIT 1) ORDER BY amount ASC LIMIT 1</call>
+
++in which year were the most movies shot in the netherlands
+-The most movies were shot in the year: <call>jdbc localhost 3306 bigmovieher root admin SELECT year, COUNT(*) AS filmcount FROM film, country WHERE filmid=film.id AND country.name='Netherlands' GROUP BY film.year ORDER BY filmcount DESC LIMIT 1</call>
+
++how many movies contain the word *
+-The amount of movies that contain the word "<star>": <call>jdbc localhost 3306 bigmovieher root admin SELECT COUNT(name) FROM film WHERE name LIKE '%<star>%'</call> 
+
++how many times does a number appear in the title
+- Here it is!<call>system D:/R-3.4.3/bin/Rscript D:/GitHub/Big-Movie-Groep-15/Code/MovieBot/resources/R/numbers.R</call>
+^<call>send photo D:/GitHub/Big-Movie-Groep-15/Code/MovieBot/resources/tmp/numbers.jpeg The graph produced by R and Groep 15©</call>
+
++show me the amount of movies made in the netherlands by time
+- Here it is!<call>system D:/R-3.4.3/bin/Rscript D:/GitHub/Big-Movie-Groep-15/Code/MovieBot/resources/R/county-year.R</call>
+^<call>send photo D:/GitHub/Big-Movie-Groep-15/Code/MovieBot/resources/tmp/country-year.jpeg The graph produced by R and Groep 15©</call>
+
 
 // Substitutions
 ! sub i'm     = i am

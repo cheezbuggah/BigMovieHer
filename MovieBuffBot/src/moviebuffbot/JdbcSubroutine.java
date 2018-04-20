@@ -6,6 +6,8 @@ import com.rivescript.macro.Subroutine;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,6 +17,11 @@ public class JdbcSubroutine implements Subroutine {
 
     @Override
     public String call(com.rivescript.RiveScript rs, String[] args) {
+        /*        try {
+            Class.forName("com.mysql.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JdbcSubroutine.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
         String host = args[0];
         String port = args[1];
         String db = args[2];
