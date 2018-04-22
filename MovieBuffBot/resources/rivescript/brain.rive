@@ -41,61 +41,35 @@
 
 
 
-#moet nog aan gewerkt worden.
-+in hoeveel films spelen Nick Frost en Simon Pegg samen?
--<call>jdbc localhost 3306 bigmovieher root admin Select count(title_id) FROM bigmovieher.principal WHERE name_id IN (Select id FROM bigmovieher.name WHERE primaryName LIKE "Simon Pegg") union Select distinct title_id FROM bigmovieher.principal WHERE name_id IN (Select id FROM bigmovieher.name WHERE primaryName LIKE "Nick Frost") GROUP BY title_id HAVING count(title_id) >= 2</call>
++in how many movies do simon pegg and nick frost play together
+-<call>jdbc localhost 3306 bigmovieher root admin SELECT count(*) FROM (SELECT count(title_id) FROM (Select distinct title_id, name_id FROM bigmovieher.principal WHERE name_id IN (Select is FROM bigmovieher.name WHERE primaryName LIKE "Simon Pegg") union Select distinct title_id, name_id FROM bigmovieher.principal WHERE name_id IN(Select id FROM bigmovieher.name WHERE primaryName LIKE "Nick Frost") ) AS duo GROUP BY title_id HAVING count(title_id) >= 2) as stuff</call>
 
-+hoeveel afleveringen zijn er van monty python flying circus?
++how many episodes are there of monty pythons flying circus
 -<call>jdbc localhost 3306 bigmovieher root admin Select count(*) FROM bigmovieher.episode WHERE parentTconst IN ( Select id FROM bigmovieher.title WHERE title.primaryTitle LIKE "Monty Python's Flying Circus")</call>
 
-+in hoeveel films speelt joop braakhekke?
++in how many movies does joop braakhekke play?
 -<call>jdbc localhost 3306 bigmovieher root admin SELECT Count(*) FROM bigmovieher.principal WHERE principal.name_id IN (Select id FROM bigmovieher.name WHERE name.primaryName Like "Joop Braakhekke")</call>
 
-+hoeveel films hebben een internationale titel die verschilt van de engelse titel
++how many movies have a differing international title from the english title
 -<call>jdbc localhost 3306 bigmovieher root admin SELECT count(*) FROM bigmovieher.title WHERE primaryTitle!=originalTitle; SELECT primaryTitle,originalTitle FROM bigmovieher.title WHERE primaryTitle!=originalTitle limit 1;</call>
 
-+Wat is het minst voorkomende genre voor 1950
++what is the least occuring genre before 1950
 -<call>jdbc localhost 3306 bigmovieher root admin SELECT genre.name FROM bigmovieher.genre WHERE genre.title_id IN (Select id FROM bigmovieher.title WHERE startYear < 1950 AND startYear > 1000) GROUP BY genre.name ORDER BY count(genre.name) ASC limit 1</call>
 
-+Wat is de kortste film met een rating van 8.5 of hoger?
++what is the shortest movie with a rating above 8.5
 -<call>jdbc localhost 3306 bigmovieher root admin SELECT title.primaryTitle, title.runtimeMinutes FROM bigmovieher.title WHERE title.id in (SELECT rating.title_id FROM bigmovieher.rating where rating.averageRating >= 0.85) and title.runtimeMinutes <> 0 order by title.runtimeMinutes ASC limit 1</call>
 
-+wat is de show met de meeste afleveringen?
++what is the series with the most episodes
 -<call>jdbc localhost 3306 bigmovieher root admin Select title.primaryTitle, epselect.PTC FROM(SELECT DISTINCT parentTconst, count(parentTconst) AS PTC FROM bigmovieher.episode group by parentTconst order by PTC  DESC limit 1) AS epselect INNER JOIN bigmovieher.title ON title.id = epselect.parentTconst;</call>
 
-+Hoeveel films hebben 'adventure' in de titel, geef een voorbeeld.
++how many movies contain the word adventure
 -<call>jdbc localhost 3306 bigmovieher root admin SELECT Count(*) FROM bigmovieher.title WHERE primaryTitle LIKE "%adventure%"; SELECT PrimaryTitle FROM bigmovieher.title WHERE primaryTitle LIKE "%adventure%" LIMIT 1;</call>
 
-+ test
--<call>jdbc localhost 3306 bigmovieher root admin select primaryTitle from bigmovieher.title LIMIT 10</call>
++how many people from the classical era are credited
+-<call>jdbc localhost 3306 bigmovieher root admin select primaryName, birthYear FROM bigmovieher.name WHERE birthYear <> 0 AND birthYear < 500 order by name.birthYear asc;</call>
 
-+how many movies were only made for tv
--<call>jdbc localhost 3306 bigmovieher root admin SELECT count(id) FROM film WHERE id LIKE '%(TV)'</call>
-
-+in which country are the most movies made
--<call>jdbc localhost 3306 bigmovieher root admin SELECT name FROM country GROUP BY name ORDER BY COUNT(name) DESC LIMIT 1 </call>
-
-+which movies are (partially) played in new york
--The amount of movies that are played in New York : <call>jdbc localhost 3306 bigmovieher root admin SELECT COUNT(film.name) FROM state INNER JOIN film ON state.filmid = film.id AND state.name LIKE '%New York%' </call>
-^Here are 5 examples of those movies:\n
-^<call>jdbc localhost 3306 bigmovieher root admin SELECT film.name FROM state INNER JOIN film ON state.filmid = film.id AND state.name LIKE '%New York%' LIMIT 5  </call>\n
-
-+which movies were filmed in more than one country
--<call>jdbc localhost 3306 bigmovieher root admin SELECT COUNT(*) FROM( SELECT filmid FROM country GROUP BY filmid HAVING COUNT(*) > 1) COUNT</call>
-^Here are 5 examples of those movies:\n
-^<call>jdbc localhost 3306 bigmovieher root admin SELECT film.name FROM( SELECT filmid FROM country GROUP BY filmid HAVING COUNT(*) > 1) COUNT LIMIT 5</call>
-
-+what is the shortest movie with a rating of 8 or higher
--<call>jdbc localhost 3306 bigmovieher root admin SELECT name FROM film,runtime,rating WHERE film.id = runtime.filmid AND film.id = rating.filmid ORDER BY runtime.amount ASC, rating.average DESC LIMIT 1</call>
-
-+which movie has the highest rating with the least amount of votes
--<call>jdbc localhost 3306 bigmovieher root admin SELECT rating.filmid, rating.average FROM public.rating WHERE average IN (SELECT average FROM public.rating ORDER BY average DESC LIMIT 1) ORDER BY amount ASC LIMIT 1</call>
-
-+in which year were the most movies shot in the netherlands
--The most movies were shot in the year: <call>jdbc localhost 3306 bigmovieher root admin SELECT year, COUNT(*) AS filmcount FROM film, country WHERE filmid=film.id AND country.name='Netherlands' GROUP BY film.year ORDER BY filmcount DESC LIMIT 1</call>
-
-+how many movies contain the word *
--The amount of movies that contain the word "<star>": <call>jdbc localhost 3306 bigmovieher root admin SELECT COUNT(name) FROM film WHERE name LIKE '%<star>%'</call> 
++what are ten times that christopher nolan was credited without hans zimmer
+-<call>jdbc localhost 3306 bigmovieher root admin SELECT distinct title.primaryTitle FROM(Select distinct title_id FROM bigmovieher.principal WHERE name_id IN (Select name.id FROM bigmovieher.name WHERE primaryName LIKE "Christopher Nolan") )waltz INNER JOIN bigmovieher.title on waltz.title_id = title.id WHERE NOT waltz.title_id IN (Select distinct title_id FROM bigmovieher.principal WHERE name_id IN(Select name.id FROM bigmovieher.name WHERE primaryName LIKE "Hans Zimmer"))LIMIT 10;</call>
 
 +how many times does a number appear in the title
 - Here it is!<call>system D:/R-3.4.3/bin/Rscript D:/GitHub/Big-Movie-Groep-15/Code/MovieBot/resources/R/numbers.R</call>
