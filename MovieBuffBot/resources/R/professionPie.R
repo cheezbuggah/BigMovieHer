@@ -9,6 +9,7 @@ library(ggplot2)
 library(ggrepel)
 library(scales)
 library(plotly)
+setwd("C://Users//Emiel//Git//BigMovieHer//MovieBuffBot//resources//tmp")
 
 con <- dbConnect(MySQL(), dbname="bigmovieher", user="root", password="", host="localhost")
 
@@ -22,6 +23,6 @@ slices <- professionCount[,1]
 
 bp <- ggplot(professionCount, aes(x="", y=slices, fill=lbls)) + geom_bar(width = 1, stat = "identity") + ggtitle("Professions in the movie business")
 pie <- bp + coord_polar("y", start = 0)
-png(filename = "C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/tmp/professionPie.png")
+png(filename = "professionPie.png")
 pie + geom_bar(stat = "identity", color = 'black') + guides(fill=guide_legend(override.aes = list(colour=NA)))
 dev.off()

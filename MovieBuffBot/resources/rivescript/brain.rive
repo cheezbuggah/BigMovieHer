@@ -52,42 +52,42 @@
 
 
 +in how many movies do simon pegg and nick frost play together
--<call>jdbc localhost 3306 bigmovieher root admin SELECT count(*) FROM (SELECT count(title_id) FROM (Select distinct title_id, name_id FROM bigmovieher.principal WHERE name_id IN (Select is FROM bigmovieher.name WHERE primaryName LIKE "Simon Pegg") union Select distinct title_id, name_id FROM bigmovieher.principal WHERE name_id IN(Select id FROM bigmovieher.name WHERE primaryName LIKE "Nick Frost") ) AS duo GROUP BY title_id HAVING count(title_id) >= 2) as stuff</call>
+-<call>jdbc localhost 3306 bigmovieher root admin SELECT count(*) FROM (SELECT count(title_id) FROM (Select distinct title_id, name_id FROM bigmovieher.principal WHERE name_id IN (Select id FROM bigmovieher.name WHERE primaryName LIKE "Simon Pegg") union Select distinct title_id, name_id FROM bigmovieher.principal WHERE name_id IN(Select id FROM bigmovieher.name WHERE primaryName LIKE "Nick Frost") ) AS duo GROUP BY title_id HAVING count(title_id) >= 2) as stuff</call>
 
 +how many episodes are there of monty pythons flying circus
 -<call>jdbc localhost 3306 bigmovieher root admin Select count(*) FROM bigmovieher.episode WHERE parentTconst IN ( Select id FROM bigmovieher.title WHERE title.primaryTitle LIKE "Monty Python's Flying Circus")</call>
 
-+in how many movies does joop braakhekke play?
++how many times is Joop Braakhekke credited?
 -<call>jdbc localhost 3306 bigmovieher root admin SELECT Count(*) FROM bigmovieher.principal WHERE principal.name_id IN (Select id FROM bigmovieher.name WHERE name.primaryName Like "Joop Braakhekke")</call>
 
 +how many movies have a differing international title from the english title
--<call>jdbc localhost 3306 bigmovieher root admin SELECT count(*) FROM bigmovieher.title WHERE primaryTitle!=originalTitle; SELECT primaryTitle,originalTitle FROM bigmovieher.title WHERE primaryTitle!=originalTitle limit 1;</call>
+-<call>jdbc localhost 3306 bigmovieher root admin SELECT count(*) FROM bigmovieher.title WHERE primaryTitle!=originalTitle;</call>
 
 +what is the least occuring genre before 1950
 -<call>jdbc localhost 3306 bigmovieher root admin SELECT genre.name FROM bigmovieher.genre WHERE genre.title_id IN (Select id FROM bigmovieher.title WHERE startYear < 1950 AND startYear > 1000) GROUP BY genre.name ORDER BY count(genre.name) ASC limit 1</call>
 
-+what is the shortest movie with a rating above 8.5
--<call>jdbc localhost 3306 bigmovieher root admin SELECT title.primaryTitle, title.runtimeMinutes FROM bigmovieher.title WHERE title.id in (SELECT rating.title_id FROM bigmovieher.rating where rating.averageRating >= 0.85) and title.runtimeMinutes <> 0 order by title.runtimeMinutes ASC limit 1</call>
++what is the shortest movie with a rating above 8
+-<call>jdbc localhost 3306 bigmovieher root admin SELECT title.primaryTitle FROM bigmovieher.title WHERE title.id in (SELECT rating.title_id FROM bigmovieher.rating where rating.averageRating >= 0.8) and title.runtimeMinutes <> 0 order by title.runtimeMinutes ASC limit 1</call>
 
 +what is the series with the most episodes
--<call>jdbc localhost 3306 bigmovieher root admin Select title.primaryTitle, epselect.PTC FROM(SELECT DISTINCT parentTconst, count(parentTconst) AS PTC FROM bigmovieher.episode group by parentTconst order by PTC  DESC limit 1) AS epselect INNER JOIN bigmovieher.title ON title.id = epselect.parentTconst;</call>
+-<call>jdbc localhost 3306 bigmovieher root admin Select title.primaryTitle, " met ", epselect.PTC, " afleveringen" FROM(SELECT DISTINCT parentTconst, count(parentTconst) AS PTC FROM bigmovieher.episode group by parentTconst order by PTC  DESC limit 1) AS epselect INNER JOIN bigmovieher.title ON title.id = epselect.parentTconst;</call>
 
-+how many movies contain the word adventure
--<call>jdbc localhost 3306 bigmovieher root admin SELECT Count(*) FROM bigmovieher.title WHERE primaryTitle LIKE "%adventure%"; SELECT PrimaryTitle FROM bigmovieher.title WHERE primaryTitle LIKE "%adventure%" LIMIT 1;</call>
++give an example of a movie with the name adventure in the title
+-<call>jdbc localhost 3306 bigmovieher root admin SELECT PrimaryTitle FROM bigmovieher.title WHERE primaryTitle LIKE "%adventure%" LIMIT 1;</call>
 
 +how many people from the classical era are credited
--<call>jdbc localhost 3306 bigmovieher root admin select primaryName, birthYear FROM bigmovieher.name WHERE birthYear <> 0 AND birthYear < 500 order by name.birthYear asc;</call>
+-<call>jdbc localhost 3306 bigmovieher root admin select primaryName, " geboren op ", birthYear FROM bigmovieher.name WHERE birthYear <> 0 AND birthYear < 500 order by name.birthYear asc;</call>
 
 +what are ten times that christopher nolan was credited without hans zimmer
--<call>jdbc localhost 3306 bigmovieher root admin SELECT distinct title.primaryTitle FROM(Select distinct title_id FROM bigmovieher.principal WHERE name_id IN (Select name.id FROM bigmovieher.name WHERE primaryName LIKE "Christopher Nolan") )waltz INNER JOIN bigmovieher.title on waltz.title_id = title.id WHERE NOT waltz.title_id IN (Select distinct title_id FROM bigmovieher.principal WHERE name_id IN(Select name.id FROM bigmovieher.name WHERE primaryName LIKE "Hans Zimmer"))LIMIT 10;</call>
+-<call>jdbc localhost 3306 bigmovieher root admin SELECT distinct title.primaryTitle, " " FROM(Select distinct title_id FROM bigmovieher.principal WHERE name_id IN (Select name.id FROM bigmovieher.name WHERE primaryName LIKE "Christopher Nolan") )waltz INNER JOIN bigmovieher.title on waltz.title_id = title.id WHERE NOT waltz.title_id IN (Select distinct title_id FROM bigmovieher.principal WHERE name_id IN(Select name.id FROM bigmovieher.name WHERE primaryName LIKE "Hans Zimmer"))LIMIT 10;</call>
 
 +how many times does a number appear in the title
 - Here it is!<call>system C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/resources/R/numbers.R</call>
-^<call>send photo C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/tmp/numbersTitles.jpeg The graph produced by R</call>
+^<call>send photo C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/resources/tmp/numberTitles.jpeg The graph produced by R</call>
 
-+show me the amount of movies made in the netherlands by time
++what is the distribution of jobs in the movie business
 - Here it is!<call>system C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/resources/R/professionPie.R</call>
-^<call>send photo C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/tmp/professionPie.png The graph produced by R</call>
+^<call>send photo C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/resources/tmp/professionPie.png The graph produced by R</call>
 
 
 // Substitutions

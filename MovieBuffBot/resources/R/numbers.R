@@ -4,7 +4,7 @@
 
 library(RMySQL)
 library(ggplot2)
-
+setwd("C://Users//Emiel//Git//BigMovieHer//MovieBuffBot//resources//tmp")
 con <- dbConnect(MySQL(), dbname="bigmovieher", user="root", password="", host="localhost")
 
 b <- "'% "
@@ -36,4 +36,4 @@ for (i in 1:9){
 library("ggplot2")
 library("plyr")
 ggplot(data=df, aes(x=Number,y=Count)) + geom_bar(stat="identity")
-ggsave(filename = "C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/tmp/numbersTitles.jpeg")
+ggsave(filename = "numberTitles.jpeg")
