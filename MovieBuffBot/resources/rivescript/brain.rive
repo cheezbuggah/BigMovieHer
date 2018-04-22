@@ -8,6 +8,16 @@
 - Splendid!
 - Couldn't be better!
 
++ my name is *
+- <set name=<formal>>How nice to meet you, <formal> i shall remember your name human.
+- <set name=<formal>>Hi, <formal>, my name is <bot name>.
+- <set name=<formal>><formal>, what an odd name.
+
++ (what is my name|who am i|do you know my name|do you know who i am){weight=10}
+- Your name is <get name>.
+- You told me your name is <get name>.
+- Aren't you <get name>?
+
 +what's the meaning of life
 -42
 
