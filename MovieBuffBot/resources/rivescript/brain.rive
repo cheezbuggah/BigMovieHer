@@ -82,12 +82,12 @@
 -<call>jdbc localhost 3306 bigmovieher root admin SELECT distinct title.primaryTitle FROM(Select distinct title_id FROM bigmovieher.principal WHERE name_id IN (Select name.id FROM bigmovieher.name WHERE primaryName LIKE "Christopher Nolan") )waltz INNER JOIN bigmovieher.title on waltz.title_id = title.id WHERE NOT waltz.title_id IN (Select distinct title_id FROM bigmovieher.principal WHERE name_id IN(Select name.id FROM bigmovieher.name WHERE primaryName LIKE "Hans Zimmer"))LIMIT 10;</call>
 
 +how many times does a number appear in the title
-- Here it is!<call>system D:/R-3.4.3/bin/Rscript D:/GitHub/Big-Movie-Groep-15/Code/MovieBot/resources/R/numbers.R</call>
-^<call>send photo D:/GitHub/Big-Movie-Groep-15/Code/MovieBot/resources/tmp/numbers.jpeg The graph produced by R and Groep 15©</call>
+- Here it is!<call>system C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/resources/R/numbers.R</call>
+^<call>send photo C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/tmp/numbersTitles.jpeg The graph produced by R</call>
 
 +show me the amount of movies made in the netherlands by time
-- Here it is!<call>system D:/R-3.4.3/bin/Rscript D:/GitHub/Big-Movie-Groep-15/Code/MovieBot/resources/R/county-year.R</call>
-^<call>send photo D:/GitHub/Big-Movie-Groep-15/Code/MovieBot/resources/tmp/country-year.jpeg The graph produced by R and Groep 15©</call>
+- Here it is!<call>system C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/resources/R/professionPie.R</call>
+^<call>send photo C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/tmp/professionPie.png The graph produced by R</call>
 
 
 // Substitutions

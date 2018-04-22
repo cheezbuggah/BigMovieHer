@@ -36,4 +36,4 @@ for (i in 1:9){
 library("ggplot2")
 library("plyr")
 ggplot(data=df, aes(x=Number,y=Count)) + geom_bar(stat="identity")
-ggsave(filename = "numberTitles.jpeg")
+ggsave(filename = "C:/Users/Emiel/Git/BigMovieHer/MovieBuffBot/tmp/numbersTitles.jpeg")
