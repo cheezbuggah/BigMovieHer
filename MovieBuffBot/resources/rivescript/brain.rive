@@ -26,24 +26,19 @@
 
 + [*] help [*]
 - You can ask me questions like:\n
-^ in hoeveel films spelen Nick Frost en Simon Pegg samen?\n
-^ hoeveel afleveringen zijn er van monty python flying circus?\n
-^ in hoeveel films speelt joop braakhekke?\n
-^ hoeveel films hebben een internationale titel die verschilt van de engelse titel\n
-^ Wat is het minst voorkomende genre voor 1950\n
-^ 6. Wat is de kortste film met een rating van 8.5 of hoger?\n
-^ 7. wat is de show met de meeste afleveringen?\n
-^ 8. Hoeveel films hebben 'adventure' in de titel, geef een voorbeeld.\n
-^ how many movies were only made for tv\n
-^ which movies are (partially) played in New York\n
-^ do you think that strange women lyin in ponds distributin swords is a basis for a system of gouvernment?\n
-^ which movies were filmed in more than one country\n
-^ what is the shortest movie with a rating of 8 or higher\n
-^ which movie has the highest rating with the least amount of votes\n
-^ in which year were the most movies shot in the netherlands\n
-^ how many movies contain the word * \n
+^ In how many movies do Simon Pegg and Nick frost play together?\n
+^ how many episodes are there of monty pythons flying circus?\n
+^ how many times is Joop Braakhekke credited?\n
+^ how many movies have a differing international title from the english title?\n
+^ what is the least occuring genre before 1950?\n
+^ what is the shortest movie with a rating above 8?\n
+^ what is the series with the most episodes?\n
+^ how many people from the classical era are credited?\n
+^ give an example of a movie with the name adventure in the title?\n
+^ what are ten times that christopher nolan was credited without hans zimmer?\n
 ^ how many times does a number appear in the title\n
 ^ show me the amount of movies made in the netherlands by time\n
+^ what is the distribution of jobs in the movie business\n
 
 + *
 - Not sure I got that. Type /help for some example questions.
@@ -57,7 +52,7 @@
 +how many episodes are there of monty pythons flying circus
 -<call>jdbc localhost 3306 bigmovieher root admin Select count(*) FROM bigmovieher.episode WHERE parentTconst IN ( Select id FROM bigmovieher.title WHERE title.primaryTitle LIKE "Monty Python's Flying Circus")</call>
 
-+how many times is Joop Braakhekke credited?
++how many times is joop braakhekke credited?
 -<call>jdbc localhost 3306 bigmovieher root admin SELECT Count(*) FROM bigmovieher.principal WHERE principal.name_id IN (Select id FROM bigmovieher.name WHERE name.primaryName Like "Joop Braakhekke")</call>
 
 +how many movies have a differing international title from the english title
